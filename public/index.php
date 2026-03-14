@@ -1,4 +1,15 @@
 <?php 
-    echo "<h2>Imobiliário JG</h2>";
-    echo "<h2>Projeto iniciado com sucesso</h2>";
+   
+    require_once '../app/models/cidade.php';
+
+    $cidade = new Cidade();
+   
+    $cidade->id = 1;
+    $cidade->nome = "Itapira";
+    $cidade->estado = "SP";
+
+    echo "<pre>";
+    var_dump($cidade);
+    echo "</pre>;"
+
 ?>
