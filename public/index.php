@@ -2,14 +2,12 @@
    
     require_once '../app/models/cidade.php';
 
-    $cidade = new Cidade();
+    $cidade = new Cidade("Itapira", 2);
    
-    $cidade->id = 1;
-    $cidade->nome = "Itapira";
-    $cidade->estado = "SP";
+    $cidade->setId(1);
 
     echo "<pre>";
     var_dump($cidade);
-    echo "</pre>;"
+    echo "</pre>";
 
 ?>

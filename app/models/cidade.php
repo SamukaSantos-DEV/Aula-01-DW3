@@ -6,38 +6,50 @@ class Cidade
     private $nome;
     private $estado;
 
-    public function __construct($nome, $estado = null)
+    public function __construct(string $nome, string $estado)
     {
         $this->setNome($nome);
         $this->setEstado($estado);
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
-    public function getNome()
+
+    public function getNome(): string
     {
         return $this->nome;
     }
-    public function getEstado()
+    public function getEstado(): string
     {
         return $this->estado;
     }
 
     public function setId($id)
     {
-        $this->id = (int) $id;
+        if ($this->id === null) {
+            $this->id = (int) $id;
+        }
     }
-    public function setNome($nome)
+    public function setNome(string $nome)
     {
 
+        $nome = trim($nome);
+
         if (!empty($nome)) {
-            $this->nome = $nome;
+            throw new Exception("O nome da cidade é obrigatório.");
+        }
+        $this->nome = $nome;
+    }
+    public function setEstado($estado)
+    {
+        $estado = strtoupper(trim($estado));
+
+        if(strlen($estado) !== 2) {
+            throw new Exception("O estado deve conter exatamente 2 letras.");
         }
 
-    }
-    public function setEstado($estado){
         $this->estado = $estado;
     }
 }
