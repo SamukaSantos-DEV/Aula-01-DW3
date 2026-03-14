@@ -1,9 +1,9 @@
 <?php 
 
 class Cidade{
-    public $id;
-    public $nome;
-    public $estado;
+    private $id;
+    private $nome;
+    private $estado;
     
 }
 
