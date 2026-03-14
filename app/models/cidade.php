@@ -37,7 +37,7 @@ class Cidade
 
         $nome = trim($nome);
 
-        if (!empty($nome)) {
+        if (empty($nome)) {
             throw new Exception("O nome da cidade é obrigatório.");
         }
         $this->nome = $nome;
