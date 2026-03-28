@@ -46,7 +46,7 @@ class Cidade
     {
         $estado = strtoupper(trim($estado));
 
-        if(strlen($estado) !== 2) {
+        if (strlen($estado) !== 2) {
             throw new Exception("O estado deve conter exatamente 2 letras.");
         }
 
