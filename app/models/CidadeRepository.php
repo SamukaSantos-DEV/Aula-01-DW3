@@ -18,7 +18,6 @@ class CidadeRepository
         $stmt = $this->conn->prepare("INSERT INTO cidade (nome, estado) VALUES (?, ?)");
         $stmt->execute([$cidade->getNome(), $cidade->getEstado()]);
 
-
     }
 
 
@@ -35,33 +34,6 @@ class CidadeRepository
         }
         return $cidades;
 
-
     }
 
-    public function findById($id)
-    {
-        $query = "SELECT * FROM cidade WHERE id = ?";
-        $stmt = $this->connection->prepare($query);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
-    }
-
-
-
-    public function update($id, $nome, $estado)
-    {
-        $query = "UPDATE cidade SET nome = ?, estado = ? WHERE id = ?";
-        $stmt = $this->connection->prepare($query);
-        $stmt->bind_param("ssi", $nome, $estado, $id);
-        return $stmt->execute();
-    }
-
-    public function delete($id)
-    {
-        $query = "DELETE FROM cidade WHERE id = ?";
-        $stmt = $this->connection->prepare($query);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
-    }
 }
