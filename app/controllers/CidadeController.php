@@ -1,7 +1,7 @@
 <?php
 
-require_once '../models/CidadeRepository.php';
-require_once '../models/Cidade.php';
+require_once __DIR__ . '/../models/CidadeRepository.php';
+require_once __DIR__ . '/../models/Cidade.php';
 
 class CidadeController
 {
@@ -16,38 +16,15 @@ class CidadeController
     {
         $cidades = $this->repository->listar();
 
-        require '../views/cidades/index.php';
-       
-        
-    }
-
-    public function show($id)
-    {
-        // Show specific city
-    }
-
-    public function create()
-    {
-        // Display form to create city
+        require __DIR__ . '/../views/cidades/index.php';
     }
 
     public function store()
     {
-        // Store new city in database
+        $cidade = new Cidade("Campinas", "SP");
+        $this->repository->salvar($cidade);
+        echo "<h3>Cidade salva com sucesso!</h3>";
     }
 
-    public function edit($id)
-    {
-        // Display form to edit city
-    }
 
-    public function update($id)
-    {
-        // Update city in database
-    }
-
-    public function delete($id)
-    {
-        // Delete city from database
-    }
 }
