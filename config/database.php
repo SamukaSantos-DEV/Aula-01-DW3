@@ -1,5 +1,7 @@
 <?php
 
+use Dba\Connection;
+
 class Database
 {
     private static $instance = null;
@@ -12,17 +14,25 @@ class Database
         $password = "";
 
         try {
-            $pdo = new PDO(
+            $this->connection = new PDO(
                 "mysql:host=$host;dbname=$dbname;charset=utf8",
                 $username,
                 $password,
             );
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            echo "Conectado com sucesso!";
         } catch (PDOException $e) {
             die("Erro na conexão: " . $e->getMessage());
         }
+    }
+    public static function getInstance(){
+        if(self::$instance === null) {
+            self::$instance = new Database();
+        }
+        return self::$instance;
+    }
+    public function getConnection(){
+        return $this->connection;
     }
 }
 
