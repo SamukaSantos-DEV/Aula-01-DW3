@@ -1,23 +1,26 @@
-<?php 
-   
-    require_once '../config/database.php';
+<?php
 
-    $db = Database::getInstance();
-    $conn = $db->getConnection();
+require_once '../app/models/Cidade.php';
+require_once '../app/models/CidadeRepository.php';
 
-    echo "Conexão realizada no index";
+try {
+    $repository = new CidadeRepository();
+    $cidade = new Cidade("Mogi Mirim", "SP");
+    $repository->salvar($cidade);
+    echo "<h3>Cidade salva com sucesso!</h3>";
 
-    $stmt = $conn->prepare(
-        "INSERT INTO cidades (nome, estado) VALUES (?, ?)"
-    );
-    $stmt->execute(["Itapira", "SP"]);
+    $cidades = $repository->listar();
+    foreach ($cidades as $cidade) {
+        echo "ID: " . $cidade->getId() . "<br>"; 
+        echo "Nome: " . $cidade->getNome() . "<br>";
+        echo "Estado: " . $cidade->getEstado() . "<br>";
+        echo "<hr>";
+    }
 
-    $stmt = $conn->query("SELECT * FROM cidades");
-    $cidades = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo "<pre>";
-    print_r($cidades);
-    echo "</pre>";
 
-    
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage();
+
+}
 
 ?>

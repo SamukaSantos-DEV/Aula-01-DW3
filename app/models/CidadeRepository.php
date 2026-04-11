@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../config/database.php';
+require_once '../config/database.php';
 require_once 'Cidade.php';
 
 class CidadeRepository
@@ -15,7 +15,7 @@ class CidadeRepository
 
     public function salvar(Cidade $cidade)
     {
-        $stmt = $this->conn->prepare("INSERT INTO cidade (nome, estado) VALUES (?, ?)");
+        $stmt = $this->conn->prepare("INSERT INTO cidades (nome, estado) VALUES (?, ?)");
         $stmt->execute([$cidade->getNome(), $cidade->getEstado()]);
 
     }
@@ -23,7 +23,7 @@ class CidadeRepository
 
     public function listar()
     {
-        $stmt = $this->conn->query("SELECT * FROM cidade");
+        $stmt = $this->conn->query("SELECT * FROM cidades");
         $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $cidades = [];
 
