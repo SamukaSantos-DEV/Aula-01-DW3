@@ -7,17 +7,35 @@ class CidadeRepository
 {
     private $conn;
 
-    public function __construct($connection)
+    public function __construct()
     {
         $db = Database::getInstance();
         $this->conn = $db->getConnection();
     }
 
-    public function findAll()
+    public function salvar(Cidade $cidade)
     {
-        $query = "SELECT * FROM cidade";
-        $result = $this->connection->query($query);
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->prepare("INSERT INTO cidade (nome, estado) VALUES (?, ?)");
+        $stmt->execute([$cidade->getNome(), $cidade->getEstado()]);
+
+
+    }
+
+
+    public function listar()
+    {
+        $stmt = $this->conn->query("SELECT * FROM cidade");
+        $dados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $cidades = [];
+
+        foreach ($dados as $linha) {
+            $cidade = new Cidade($linha['nome'], $linha['estado']);
+            $cidade->setId($linha['id']);
+            $cidades[] = $cidade;
+        }
+        return $cidades;
+
+
     }
 
     public function findById($id)
@@ -29,13 +47,7 @@ class CidadeRepository
         return $stmt->get_result()->fetch_assoc();
     }
 
-    public function create($nome, $estado)
-    {
-        $query = "INSERT INTO cidade (nome, estado) VALUES (?, ?)";
-        $stmt = $this->connection->prepare($query);
-        $stmt->bind_param("ss", $nome, $estado);
-        return $stmt->execute();
-    }
+
 
     public function update($id, $nome, $estado)
     {
