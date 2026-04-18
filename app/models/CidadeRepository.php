@@ -20,7 +20,6 @@ class CidadeRepository
 
     }
 
-
     public function listar()
     {
         $stmt = $this->conn->query("SELECT * FROM cidades");
@@ -35,5 +34,35 @@ class CidadeRepository
         return $cidades;
 
     }
+
+    public function burcarPorId($id)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM cidades WHERE id = ?");
+        $stmt->execute([$id]);
+        $dados = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($dados) {
+            $cidade = new Cidade($dados['nome'], $dados['estado']);
+            $cidade->setId($dados['id']);
+            return $cidade;
+        } else {
+            return null;
+        }
+    }
+
+    public function atualizar(Cidade $cidade)
+    {
+        $stmt = $this->conn->prepare(
+            "UPDATE cidades SET nome = ?, estado = ? WHERE id = ?"
+        );
+        $stmt->execute([
+            $cidade->getNome(),
+            $cidade->getEstado(),
+            $cidade->getId()
+        ]);
+    }
+
+
+
 
 }
