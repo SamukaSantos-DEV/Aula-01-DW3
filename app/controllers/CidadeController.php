@@ -12,6 +12,11 @@ class CidadeController
         $this->repository = new CidadeRepository();
     }
 
+    public function create()
+    {
+        require __DIR__ . '/../views/cidades/create.php';
+    }
+
     public function index()
     {
         $cidades = $this->repository->listar();
