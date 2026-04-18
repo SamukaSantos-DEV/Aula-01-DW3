@@ -24,12 +24,19 @@ class CidadeController
         require __DIR__ . '/../views/cidades/index.php';
     }
 
+    //Armazena os dados
     public function store()
     {
-        $cidade = new Cidade("Campinas", "SP");
-        $this->repository->salvar($cidade);
-        echo "<h3>Cidade salva com sucesso!</h3>";
+        $nome = $_POST['nome'];
+        $estado = $_POST['estado'];
+        
+        try {
+
+            $cidade = new Cidade($nome, $estado);
+            $this->repository->salvar($cidade);
+            echo "Cidade salva com sucesso!";
+        } catch (Exception $e) {
+            echo "Erro: " . $e->getMessage();
+        }
     }
-
-
 }
