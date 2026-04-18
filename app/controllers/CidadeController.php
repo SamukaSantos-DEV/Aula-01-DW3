@@ -34,7 +34,10 @@ class CidadeController
 
             $cidade = new Cidade($nome, $estado);
             $this->repository->salvar($cidade);
-            echo "Cidade salva com sucesso!";
+
+            header("Location: index.php?sucesso=1");
+            exit;
+            
         } catch (Exception $e) {
             echo "Erro: " . $e->getMessage();
         }
