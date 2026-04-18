@@ -24,7 +24,36 @@ class CidadeController
         require __DIR__ . '/../views/cidades/index.php';
     }
 
-    //Armazena os dados
+    public function edit($id)
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            die("ID não fornecido");
+        }
+
+        $cidade = $this->repository->burcarPorId($id);
+        if (!$cidade) {
+            die("Cidade não encontrada");
+        }
+
+        require __DIR__ . '/../views/cidades/edit.php';
+    }
+
+    public function update() {
+        $id = $_POST['id'];
+        $nome = $_POST['nome'];
+        $estado = $_POST['estado'];
+        try {
+            $cidade = new Cidade($nome, $estado);
+            $cidade->setId($id);
+            $this->repository->atualizar($cidade);
+            header("Location: index.php?sucesso=2");
+            exit;
+        } catch (Exception $e) {
+            echo "Erro: " . $e->getMessage();
+        }
+    }
+
     public function store()
     {
         $nome = $_POST['nome'];
@@ -37,7 +66,7 @@ class CidadeController
 
             header("Location: index.php?sucesso=1");
             exit;
-            
+
         } catch (Exception $e) {
             echo "Erro: " . $e->getMessage();
         }
